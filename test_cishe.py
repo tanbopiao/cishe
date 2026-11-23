@@ -1,4 +1,4 @@
-"""次舍（CISHE）算子骨架单测：名帖完整、桩位齐整、只增不覆盖。"""
+"""次舍（CISHE）算子单测：名帖完整、行为达标、只增不覆盖。"""
 import unittest
 
 from cishe import Cishe
@@ -15,13 +15,12 @@ class TestCishe(unittest.TestCase):
         self.assertTrue(d["anchor"].startswith("Ω₀⊂⊙∞⊂Ω"))
         self.assertTrue(d["mingwen"])
 
-    def test_enqueue_stub(self):
-        with self.assertRaises(NotImplementedError):
-            self.op.enqueue(None)
-
-    def test_dequeue_stub(self):
-        with self.assertRaises(NotImplementedError):
-            self.op.dequeue()
+    def test_fifo(self):
+        self.op.enqueue("笺一")
+        self.op.enqueue("笺二")
+        self.assertEqual(self.op.dequeue(), "笺一")
+        self.assertEqual(self.op.dequeue(), "笺二")
+        self.assertIsNone(self.op.dequeue())
 
 
 if __name__ == "__main__":
